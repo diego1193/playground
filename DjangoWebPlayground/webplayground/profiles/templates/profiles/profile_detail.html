@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}profile | {{ profile.user.username }}{% endblock %}
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+          <div class="row">
+            <!-- Previa del avatar -->
+            <div class="col-md-2">
+              {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" class="img-fluid">
+              {% else %}
+                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid">
+              {% endif %}
+              {% if request.user != profile.user %}
+              <a href="{% url 'messenger:start' profile.user.username %}" class="btn btn-primary btn-sm btn-block mt-3">Enviar Mensaje</a>
+              {% endif %}
+            </div>
+            <div class="col-md-10">
+              <h3>{{ profile.user.username }}</h3>
+              <p class="mt-3">{{ profile.bio|safe }}</p>
+              <a href="{{ profile.link }}" class="profile-link" target="_blank">{{ profile.link }}</a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
